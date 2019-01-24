@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="assetts/css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <meta charset="utf-8">
+        <title>Train Scheduler</title>
+    </head>
+
+<body>
+
+    <div class="container">
+        <div id="title">
+            <h1>TRAIN TOWN!</h1>
+        </div>
+
+        <div id="train-home">Current Train Schedule
+            <div class="row">
+                <div class="col-md-2">
+                    <div id="train-name">train name</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="train-destination">train destination</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="frequency-(min)">frequency (min)</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="next-arrival">next arrival</div>
+                </div>
+                <div class="col-md-2">
+                    <div id="minutes-away">minutes away</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="train-info">
+            <form id="train-info">
+                <label for="train name">Train Name</label>
+                <input type="text" id="train-name"><br>
+                <label for="destination">Destination</label>
+                <input type="text" id="destination"><br>
+                <label for="first train time">First Train Time (HH:mm - military time)</label>
+                <input type="text" id="time"><br>
+                <label for="frequency">Frequency</label>
+                <input type="text" id="frequency"><br>
+                <input id="add-train" type="submit" value="submit">
+            </form>
+        </div>
+
+
+        <div id="trains-view"></div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var train_name = [];
+        var destination = [];
+        var time = [];
+        var frequency = [];
+
+
+        function Buttons() {
+            $("#trains-view").empty();
+            for (var i = 0; i < animals.length; i++) {
+                var a = $("<button>");
+                a.addClass("animal");
+                a.attr("data-name", animals[i]);
+                a.text(animals[i]);
+                $("#animals-view").append(a);
+            }
+        }
+        Buttons();
+        $(document).on("click", "button", function () {
+            var animalz = $(this).attr("data-name");
+            console.log(this);
+            callgiphy(animalz);
+        });
+
+        $("#add-animal").on("click", function (event) {
+            event.preventDefault();
+            var animal = $("#animal-input").val().trim();
+            animals.push(animal);
+            Buttons();
+        });
+    </script>
+   </div>
+</body>
+
+</html>
