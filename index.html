@@ -1,95 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en-us">
 
 <head>
 
-    <head>
-        <link rel="stylesheet" type="text/css" href="assetts/css/style.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <meta charset="utf-8">
-        <title>Train Scheduler</title>
-    </head>
+  <meta charset="UTF-8">
+  <title>Train Tracker</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="assetts/css/style.css">
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+  <style>
+    #employee-table th,
+    td {
+      width: 19.575%;
+    }
+  </style>
+</head>
 
 <body>
 
-    <div class="container">
-        <div id="title">
-            <h1>TRAIN TOWN!</h1>
-        </div>
+  <div class="container">
 
-        <div id="train-home">Current Train Schedule
-            <div class="row">
-                <div class="col-md-2">
-                    <div id="train-name">train name</div>
-                </div>
-                <div class="col-md-2">
-                    <div id="train-destination">train destination</div>
-                </div>
-                <div class="col-md-2">
-                    <div id="frequency-(min)">frequency (min)</div>
-                </div>
-                <div class="col-md-2">
-                    <div id="next-arrival">next arrival</div>
-                </div>
-                <div class="col-md-2">
-                    <div id="minutes-away">minutes away</div>
-                </div>
-            </div>
-        </div>
-
-
-        <div id="train-info">
-            <form id="train-info">
-                <label for="train name">Train Name</label>
-                <input type="text" id="train-name"><br>
-                <label for="destination">Destination</label>
-                <input type="text" id="destination"><br>
-                <label for="first train time">First Train Time (HH:mm - military time)</label>
-                <input type="text" id="time"><br>
-                <label for="frequency">Frequency</label>
-                <input type="text" id="frequency"><br>
-                <input id="add-train" type="submit" value="submit">
-            </form>
-        </div>
-
-
-        <div id="trains-view"></div>
-
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color: navy; color: white">
+      <h1 class="text-center">Train Town!</h1>
+      <h3 class="text-center">I Like Trains. I like their rhythm, and I like the freedom.</h3>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        var train_name = [];
-        var destination = [];
-        var time = [];
-        var frequency = [];
+    <div class="row">
 
+      <div class="col-md-12">
 
-        function Buttons() {
-            $("#trains-view").empty();
-            for (var i = 0; i < animals.length; i++) {
-                var a = $("<button>");
-                a.addClass("animal");
-                a.attr("data-name", animals[i]);
-                a.text(animals[i]);
-                $("#animals-view").append(a);
-            }
-        }
-        Buttons();
-        $(document).on("click", "button", function () {
-            var animalz = $(this).attr("data-name");
-            console.log(this);
-            callgiphy(animalz);
-        });
+        <div class="card mb-3">
+          <div class="card-header">Current Train Schedule</div>
+          <div class="card-body">
+            <table class="table table-sm table-hover" id='train-home'>
+              <thead>
+                <tr>
+                  <th scope="col">Train Name</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Frequency (min)</th>
+                  <th scope="col">Next Arrival</th>
+                  <th scope="col">Minutes Away</th>
+                </tr>
+              </thead>
+              <tbody>
+                <td id="train-name" scope="col"></td>
+                <td id="train-destination" scope="col"></td>
+                <td id="train-freq" scope="col"></td>
+                <td id="train-arrival" scope="col"></td>
+                <td id="train-mins" scope="col"></td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        $("#add-animal").on("click", function (event) {
-            event.preventDefault();
-            var animal = $("#animal-input").val().trim();
-            animals.push(animal);
-            Buttons();
-        });
-    </script>
-   </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <div class="card-header">Add Train</div>
+          <div class="card-body">
+
+            <!-- Entry Form -->
+            <form>
+              <div class="form-group">
+                <label for="train-name-input">Train Name</label>
+                <input class="form-control" id="train-name-input" placeholder="The El: Red Line" type="text">
+              </div>
+              <div class="form-group">
+                <label for="train-destination-input">Destination</label>
+                <input class="form-control" id="train-destination-input" placeholder="The Loop" type="text">
+              </div>
+              <div class="form-group">
+                <label for="train-freq-input">First Train Time (HH:mm - military time)</label>
+                <input class="form-control" id="train-freq-input" placeholder="20:19" type="text">
+              </div>
+              <div class="form-group">
+                <label for="train-arrival-input">Frequency (min)</label>
+                <input class="form-control" id="train-arrival-input" placeholder="15" type="text">
+              </div>
+              <button class="btn btn-primary float-right" id="add-train-btn">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+  <script>
+    var config = {
+      apiKey: "AIzaSyAZDdMSO6XiN05IbaG3BTUrRyERSIc3ehc",
+      authDomain: "trainz-yo.firebaseapp.com",
+      databaseURL: "https://trainz-yo.firebaseio.com",
+      projectId: "trainz-yo",
+      storageBucket: "trainz-yo.appspot.com",
+      messagingSenderId: "571928154323"
+    };
+    firebase.initializeApp(config);
+
+    var database = firebase.database();
+
+    $("#add-train-btn").on("click", function (event) {
+      event.preventDefault();
+
+      //inputs
+      name = $("#train-name-input").val();
+      destination = $("#train-destination-input").val();
+      freq = $("#train-freq-input").val();
+      arrival = $("#train-arrival-input").val();
+      console.log(name);
+      console.log(destination);
+      console.log(freq);
+      console.log(arrival);
+
+      // hold train data
+      var newtrain = {
+        name: name,
+        destination: destination,
+        freq: freq,
+        arrival: arrival,
+      };
+
+      //push train data to firebase
+      database.ref().push(newtrain);
+
+      console.log(newtrain.name);
+      console.log(newtrain.destination);
+      console.log(newtrain.freq);
+      console.log(newtrain.arrival);
+
+      // reset text-box
+      $("#train-name-input").val("");
+      $("#train-destination-input").val("");
+      $("#train-freq-input").val("");
+      $("#train-arrival-input").val("");
+    });
+
+    // Make Firebase children
+    database.ref().on("child_added", function (childSnapshot) {
+      console.log(childSnapshot.val());
+
+      // Store everything into a variable.
+      var TrainName = childSnapshot.val().name;
+      var TrainDest = childSnapshot.val().destination;
+      var TrainFreq = childSnapshot.val().freq;
+      var TrainArr = childSnapshot.val().arrival;
+
+      console.log(TrainName);
+      console.log(TrainDest);
+      console.log(TrainFreq);
+      console.log(TrainArr);
+
+      // // Prettify the employee start
+      // var empStartPretty = moment.unix(empStart).format("MM/DD/YYYY");
+
+      // // Calculate the months worked using hardcore math
+      // // To calculate the months worked
+      // var empMonths = moment().diff(moment(empStart, "X"), "months");
+      // console.log(empMonths);
+
+      // // Calculate the total billed rate
+      // var empBilled = empMonths * empRate;
+      // console.log(empBilled);
+
+      // Create the new row
+      var newRow = $("<tr>").append(
+        $("<td>").text(TrainName),
+        $("<td>").text(TrainDest),
+        $("<td>").text(TrainFreq),
+        $("<td>").text(TrainArr),
+        // $("<td>").text(empRate),
+        // $("<td>").text(empBilled)
+      );
+
+      // Append the new row to the table
+      $("#train-home > tbody").append(newRow);
+    });
+
+  // Example Time Math
+  // -----------------------------------------------------------------------------
+  // Assume Employee start date of January 1, 2015
+  // Assume current date is March 1, 2016
+
+  // We know that this is 15 months.
+  // Now we will create code in moment.js to confirm that any attempt we use meets this test case
+  </script>
 </body>
 
 </html>
